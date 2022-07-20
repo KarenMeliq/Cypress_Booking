@@ -1,47 +1,96 @@
-import {getElements} from "./getElements"
 
+import helpers from "../../support/helpers.js";
 
 
 class FilterParameters{
-     
-    getCity(){
-        let testCity = "Dili";
-        getElements.getCity().type(testCity)
-        
-    }
 
-    choseCity(){
-        getElements.choseCity().click()
-                 
-    }
-    
-    getDate(){
-         getElements.getDate().click();
-         getElements.getCheckInDate().click({force: true});
-         cy.wait(2000)
-         getElements.getCheckoutDate().click({force: true})
+    getCity(){
+        
+        return cy.get("#ss")
         
     }
    
-    increaseAdults(){
-        getElements.getAdults().click()
+    setCity(){
+        let testCity = "Dili";
+        this.getCity().type(testCity)
         
-        for ( let n = 0; n<5; n++ ){
-            getElements.increaseAdults().click();
+    }
+
+      
+    listCity(){
+        return cy.get("[data-i='0']")
+    }
+
+
+    choseCity(){
+        this.listCity().click()
+                 
+    }
+
+    getDataPicker() {
+        return cy.get(".b-datepicker");
+    }
+
+    
+    startData = helpers.generateDatesForBooking(2);
+    endDate = helpers.generateDatesForBooking(20);
+
+    selectStartDate() {
+        cy.get("[data-date = " + this.startData + "]").click()
+    }
+
+    selectEndDate() {
+       
+        cy.get("[data-date = " + this.endDate + "]").click()
+    }
+
+     
+
+    getAdults(){
+        return cy.get("[data-adults-count]")
+    }
+
+
+    addAdults(){
+
+        return  cy.get("[aria-label='Increase number of Adults'] > .bui-button__text")
+               
+     }
+ 
+ 
+   
+    increaseAdults(){
+        this.getAdults().click()
+        
+        for ( let n = 0; n<3; n++ ){
+            this.addAdults().click();
 
         }
 
     }
-     
-    searchResult() {
-        getElements.searchResult();
+
+
+    getSearchButton() {
+       return cy.get("button[data-sb-id='main']");
 
     } 
 
-    filterByStar(){
-        getElements.getFilterfourStarCheckbox().click({ force: true });
+     
+    searchResult() {
+        this.getSearchButton().click();
+
+    } 
+
+    
+          
+
     }
-}
+
+
+
+
+
+
 
 
 export const filterParameters = new FilterParameters();

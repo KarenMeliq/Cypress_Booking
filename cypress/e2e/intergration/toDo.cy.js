@@ -3,6 +3,7 @@
 import {mainPage} from "../pages/mainPage.js";
 import {filterParameters} from "../pages/filterParameters.js"
 import { assertion } from "../asertions/assertion.js";
+import {searchPage} from "../pages/searchPage"
 
 describe('example to-do app', () => {
   beforeEach(() => {
@@ -11,18 +12,20 @@ describe('example to-do app', () => {
 
   it('Booking', () => {
     
-    filterParameters.getCity();
+    filterParameters.setCity();
     cy.wait(1000)
     filterParameters.choseCity();
-    filterParameters.getDate();
+    filterParameters.selectStartDate();
+    filterParameters.selectEndDate();
+   
     filterParameters.increaseAdults();
     filterParameters.searchResult();
-    
+    searchPage.select4StarCheckbox();
+
     assertion.verifyTheLocations();
     cy.wait(1000)
-    filterParameters.filterByStar();
-   // assertion.verifyTheStars();
-   // filterParameters.filterByStar();
+    assertion.assert4StarsList();
+   
     
   })
 
